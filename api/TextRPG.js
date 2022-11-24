@@ -111,19 +111,18 @@ class TextAPI {
 
                 })
                 
-                
 
                 // Stats
 
                 this.data.STORAGE.json.settings.stats.forEach(stat => {
 
-                    this.data.STORAGE.data.stats = []
-                    
-                    this.data.STORAGE.data.stats.push(stat)
+                    this.stats.createStat(stat)
 
                 });
 
-                setInterval(this.update.display.updateGameDisplay, 10)
+                setTimeout(this.update.display.updateGameDisplay.bind(this), 100)
+                setInterval(this.stats.checkStats, 250)
+              
 
             }
 
@@ -155,11 +154,7 @@ class TextAPI {
 
                         button.innerText = option.description
                         button.id = "option"
-                        button.addEventListener("click", () => {
-
-                            this.update.scenes.changeCurrentScene(option.change_scene_to)
-
-                        })
+                        button.addEventListener("click",this.update.scenes.changeCurrentScene.bind(this, option.change_scene_to))
 
                         this.bodyDiv.appendChild(button)
 
@@ -184,6 +179,66 @@ class TextAPI {
                 })
 
             }
+
+        }
+
+    }
+
+    stats = {
+
+        createStat: (stat) => {
+
+            this.data.STORAGE.data.stats = []
+                    
+            this.data.STORAGE.data.stats.push(stat)
+
+        },
+
+        checkStats: () => {
+
+            this.data.STORAGE.data.stats.forEach(stat => {
+
+                if (stat.limits != null) {
+
+                    if (stat.limits.max > stat.value) this.data.STORAGE.data.stats[stat] = stat.limits.max
+                    if (stat.limits.min < stat.value) this.data.STORAGE.data.stats[stat] = stat.limits.min
+
+                }
+            
+                if (stat.events != null) {
+
+                    stat.events.forEach(event => {
+
+                        switch (event.type) {
+
+                            case "test_value":
+
+                                event.conditions.forEach(condition => {
+
+                                    switch (condition.type) {
+
+                                        case "is_less_then_or_equal_to":
+                                            if (stat.value <= condition.value) {
+                                                this.gameClass[event.execute.function]()
+                                            }
+                                            break
+                                        default:
+                                            console.log("Error invalid condition type");
+                                    }
+
+                                })
+
+                                break
+                            default:
+                                console.log("Error cannot check Stat");
+
+                        }
+
+                    })
+
+                }
+
+            })
 
         }
 

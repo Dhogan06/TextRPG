@@ -7,7 +7,9 @@
         "game_class": "Game",
         "stats": [
             {
+                "stat_id": 0,
                 "stat_name": "Health",
+                "value": 100,
                 "limits": {
                     "max": 100,
                     "min": 0
@@ -16,10 +18,13 @@
                     {
                         "type": "test_value",
                         "value": "Health",
-                        "function": "killPlayer",
+                        "execute": {
+                            "function": "killPlayer"
+                        },
                         "conditions": [
                             {
-                                "is_less_then_or_equal_to": 0
+                                "type": "is_less_then_or_equal_to",
+                                "value": 0
                             }
                         ]
                     }

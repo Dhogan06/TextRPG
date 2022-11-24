@@ -7,7 +7,15 @@
     <title>Text RPG</title>
 </head>
 <body>
+    <script>
+        const API = {
+            
+        }
+    </script>
     <script src="https://unpkg.com/jszip@3.7.1/dist/jszip.js" type="text/javascript"></script>
-    <script src="./index.js" type="module"></script>
+    <script type="module">
+        import { TextAPI } from "./api/TextRPG.js"
+        API.module = new TextAPI()
+    </script>
 </body>
 </html>
