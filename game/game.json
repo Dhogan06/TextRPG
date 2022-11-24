@@ -1,0 +1,40 @@
+{
+    "game_title": "Title",
+    "game_version": "0.1",
+    "game_description": "Description",
+    "settings": {
+        "start_scene": 0,
+        "game_class": "Game",
+        "stats": [
+            {
+                "stat_name": "Health",
+                "limits": {
+                    "max": 100,
+                    "min": 0
+                },
+                "events": [
+                    {
+                        "type": "test_value",
+                        "value": "Health",
+                        "function": "killPlayer",
+                        "conditions": [
+                            {
+                                "is_less_then_or_equal_to": 0
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "scenes": [
+        {
+            "id": 0,
+            "file": "scenes/test_scene.json"
+        },
+        {
+            "id": 1,
+            "file": "scenes/test_scene_2.json"
+        }
+    ]
+}

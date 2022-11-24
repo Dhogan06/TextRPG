@@ -1,0 +1,12 @@
+{
+    "id": 1,
+    "scene_name": "Test Scene 2",
+    "scene_description": "This is a test Scene",
+    "options": [
+        {
+            "id": 0,
+            "description": "Go to Test Scene 1",
+            "change_scene_to": 0
+        }
+    ]
+}
