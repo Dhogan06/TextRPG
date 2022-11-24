@@ -130,6 +130,16 @@ class TextAPI {
 
     }
 
+    buttons = {
+
+        optionBtn: (change_to_scene, option, ...args) => {
+
+            
+
+        }
+
+    }
+
     update = {
 
         display: {

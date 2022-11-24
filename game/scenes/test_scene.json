@@ -6,7 +6,21 @@
         {
             "id": 0,
             "description": "Go to Test Scene 2",
-            "change_scene_to": 1
+            "change_scene_to": 1,
+            "conditions": [],
+            "events": [
+                {
+                    "type": "always_execute",
+                    "execute": {
+                        "function": "giveItem",
+                        "args": [
+                            {"type": "weapon", "name": "Stick", "data": {"damage": 2}},
+                            1
+                        ]
+                    },
+                    "conditions": []
+                }
+            ]
         }
     ]
 }
