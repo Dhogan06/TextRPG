@@ -1,7 +1,7 @@
 {
-    "game_title": "Title",
+    "game_title": "Drak Age",
     "game_version": "0.1",
-    "game_description": "Description",
+    "game_description": "This is a test game",
     "settings": {
         "start_scene": 0,
         "game_class": "Game",
@@ -17,7 +17,6 @@
                 "events": [
                     {
                         "type": "test_value",
-                        "value": "Health",
                         "execute": {
                             "function": "killPlayer"
                         },
@@ -29,17 +28,41 @@
                         ]
                     }
                 ]
+            },
+            {
+                "stat_id": 1,
+                "stat_name": "Mana",
+                "value": 100,
+                "limits": {
+                    "max": 100,
+                    "min": 0
+                },
+                "events": []
+            },
+            {
+                "stat_id": 2,
+                "stat_name": "Stamina",
+                "value": 100,
+                "limits": {
+                    "max": 100,
+                    "min": 0
+                },
+                "events": []
             }
         ]
     },
     "scenes": [
         {
             "id": 0,
-            "file": "scenes/test_scene.json"
+            "file": "scenes/p1/start_scene.json"
         },
         {
             "id": 1,
-            "file": "scenes/test_scene_2.json"
+            "file": "scenes/p1/scene_p1_1.json"
+        },
+        {
+            "id": 2,
+            "file": "scenes/p1/scene_p1_2.json"
         }
     ]
 }

@@ -7,3 +7,41 @@
 body {
     background-color: black;
 }
+
+.body__title {
+    font-size: 2.5em;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.body__description {
+    font-size: 1.25em;
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.body__option_group {
+    position: absolute;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.body__option_group__option {
+    grid-column: 1 1;
+    color: white; 
+    background-color: blue;
+    border: blue 0.3em outset;
+    min-width: 10rem;
+    height: 2rem;
+    margin: .15em;
+}
+
+.body__option_group__option:hover {
+    border: blue 0.3em inset;
+}

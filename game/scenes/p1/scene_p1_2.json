@@ -1,0 +1,21 @@
+{
+    "id": 0,
+    "scene_name": "Swamp Part 2",
+    "scene_description": "You can see a village.",
+    "options": [
+        {
+            "id": 0,
+            "description": "Go to village.",
+            "change_scene_to": null,
+            "conditions": [],
+            "events": []
+        },
+        {
+            "id": 1,
+            "description": "Go deeper into the swamp.",
+            "change_scene_to": null,
+            "conditions": [],
+            "events": []
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "id": 0,
+    "scene_name": "Dark Age - Menu",
+    "scene_description": "Press The Start Button To Start Playing",
+    "options": [
+        {
+            "id": 0,
+            "description": "Start",
+            "change_scene_to": 1,
+            "conditions": [],
+            "events": []
+        }
+    ]
+}

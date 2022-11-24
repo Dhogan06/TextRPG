@@ -60,6 +60,8 @@ class TextAPI {
                 start.addEventListener("click", () => {
 
                     this.initialize.display.initGameDisplay()
+                    file.remove()
+                    start.remove()
 
                 })
 
@@ -78,9 +80,10 @@ class TextAPI {
 
                 let body = document.createElement("div")
 
-
                 let title = document.createElement("span")
                 let description = document.createElement("span")
+
+                let buttonGroup = document.createElement("div")
 
                 // Edit Components
 
@@ -89,10 +92,13 @@ class TextAPI {
                 title.classList.add("body__title")
                 description.classList.add("body__description")
 
+                buttonGroup.classList.add("body__option_group")
+
                 // Apply Components
 
                 body.appendChild(title)
                 body.appendChild(description)
+                body.appendChild(buttonGroup)
                 document.body.appendChild(body)
 
                 // Add Components to Variables
@@ -100,6 +106,7 @@ class TextAPI {
                 this.titleSpan = title
                 this.descriptionSpan = description
                 this.bodyDiv = body
+                this.buttonGroup = buttonGroup
 
                 // Initialize Data Variables
 
@@ -132,9 +139,50 @@ class TextAPI {
 
     buttons = {
 
-        optionBtn: (change_to_scene, option, ...args) => {
+        optionBtn: (option) => {
 
-            
+            if (option != null) {
+
+                option.conditions.forEach(condition => {
+
+                    if (condition != null) {
+
+                        switch (condition.type) {
+
+                            default:
+                                console.log("Invalid Condition Type");
+
+                        }
+
+                    }
+
+                })
+
+                option.events.forEach(event => {
+
+                    if (event != null) {
+
+                        switch (event.type) {
+
+                            case "always_execute":
+                                this.gameClass[event.execute.function](...event.execute.args)
+                                break
+                            default:
+                                console.log("Invalid Event Type");
+
+                        }
+
+                    }
+
+                })
+
+                if (option.change_scene_to != null) {
+
+                    this.update.scenes.changeCurrentScene(option.change_scene_to)
+
+                }
+
+            }
 
         }
 
@@ -163,10 +211,11 @@ class TextAPI {
                         let button = document.createElement("button")
 
                         button.innerText = option.description
+                        button.classList.add("body__option_group__option")
                         button.id = "option"
-                        button.addEventListener("click",this.update.scenes.changeCurrentScene.bind(this, option.change_scene_to))
+                        button.addEventListener("click",this.buttons.optionBtn.bind(this, option))
 
-                        this.bodyDiv.appendChild(button)
+                        this.buttonGroup.appendChild(button)
 
                     })
 
@@ -180,7 +229,7 @@ class TextAPI {
 
                 this.data.STORAGE.data.CURRENT_SCENE_ID = scene_id
 
-                this.data.STORAGE.zip.file(this.data.STORAGE.json.scenes[scene_id].file).async("string").then(data => {
+                this.data.STORAGE.zip.file(this.data.STORAGE.json.scenes[this.data.STORAGE.data.CURRENT_SCENE_ID].file).async("string").then(data => {
 
                     this.data.STORAGE.data.CURRENT_SCENE = JSON.parse(data)
 
