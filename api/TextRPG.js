@@ -1,12 +1,8 @@
-import { Data } from "./data/data.js"
 class TextAPI {
 
     constructor () {
 
         this.initialize.display.initStartDisplay()
-
-        this.data = new Data();
-
     }
 
     initialize = {
@@ -15,126 +11,115 @@ class TextAPI {
 
             initStartDisplay: () => {
 
-                // Initialize Components
+                // Initialize start items for setting up the game.
+                // File input
                 let file = document.createElement("input")
+
+                // Start button
                 let start = document.createElement("button")
 
                 // Edit Components
+                // Set type
                 file.type = "file"
+                
+                // Set what happens when file is changed or uploaded
                 file.addEventListener("change", (e) => {
 
+                    // Init a file reader
                     const READER = new FileReader()
-
+                    
+                    // Set what happens when something is loaded with the reader
                     READER.addEventListener("load", (e) => {
 
+                        // Read the zip file and store it into a variable
                         JSZip.loadAsync(READER.result).then((zip) => {
 
+                            // get the main game file and put it into a variable
                             zip.file("game.json").async("string").then((data) => {
 
+                                // Put into variable
                                 this.data.STORAGE.json = JSON.parse(data)
-
                             })
 
-                            zip.file("game.js").async("string").then((data) => {
-
-                                let script = document.createElement("script")
-
-                                script.innerHTML = data
-
-                                document.body.appendChild(script)
-
-                            })
-
+                            // Putzip file into a variable
                             this.data.STORAGE.zip = zip
-
                         })
-
                     })
 
+                    // Read the zip file that was uploaded
                     READER.readAsArrayBuffer(e.target.files[0])
-
                 })
 
-
+                // Set up the start button now
+                // Set text
                 start.innerText = "Start Game"
+
+                // Set onclick event
                 start.addEventListener("click", () => {
 
+                    // Init the game
                     this.initialize.display.initGameDisplay()
+
+                    // Remove the start components
                     file.remove()
                     start.remove()
-
                 })
 
-                // Apply Components
-
+                // Add components to the start screen
                 document.body.appendChild(file)
                 document.body.appendChild(start)
-
             },
 
             initGameDisplay: () => {
 
-                this.gameClass = eval("new " + this.data.STORAGE.json.settings.game_class)
-
-                // Initialize Components
-
+                // Initialize components for the main game screen
+                // Body div element
                 let body = document.createElement("div")
 
+                // Title
                 let title = document.createElement("span")
+
+                // Description
                 let description = document.createElement("span")
 
+                // Button group
                 let buttonGroup = document.createElement("div")
 
                 // Edit Components
-
+                // Add class body to the body div element
                 body.classList.add("body")
 
+                // Add class body__title to the title element
                 title.classList.add("body__title")
+
+                // Add class body__descrition to the Description element
                 description.classList.add("body__description")
 
+                // Add call body__option_group to the button group element
                 buttonGroup.classList.add("body__option_group")
 
-                // Apply Components
-
+                // Add components to the main game screen
                 body.appendChild(title)
                 body.appendChild(description)
                 body.appendChild(buttonGroup)
                 document.body.appendChild(body)
 
-                // Add Components to Variables
-
+                // Add components to variables to access them later
                 this.titleSpan = title
                 this.descriptionSpan = description
                 this.bodyDiv = body
                 this.buttonGroup = buttonGroup
 
-                // Initialize Data Variables
-
-                this.data.STORAGE.data.CURRENT_SCENE_ID = this.data.STORAGE.json.settings.start_scene
+                // Initialize the game data and put it into variables
                 
                 this.data.STORAGE.zip.file(this.data.STORAGE.json.scenes[this.data.STORAGE.data.CURRENT_SCENE_ID].file).async("string").then(data => {
 
                     this.data.STORAGE.data.CURRENT_SCENE = JSON.parse(data)
-
                 })
-                
 
-                // Stats
-
-                this.data.STORAGE.json.settings.stats.forEach(stat => {
-
-                    this.stats.createStat(stat)
-
-                });
-
-                setTimeout(this.update.display.updateGameDisplay.bind(this), 100)
-                setInterval(this.stats.checkStats, 250)
-              
-
+                // setTimeout(this.update.display.updateGameDisplay.bind(this), 100)
             }
-
         }
-
     }
 
     buttons = {
@@ -225,84 +210,21 @@ class TextAPI {
 
         scenes: {
 
-            changeCurrentScene: (scene_id) => {
-
-                this.data.STORAGE.data.CURRENT_SCENE_ID = scene_id
-
-                this.data.STORAGE.zip.file(this.data.STORAGE.json.scenes[this.data.STORAGE.data.CURRENT_SCENE_ID].file).async("string").then(data => {
-
-                    this.data.STORAGE.data.CURRENT_SCENE = JSON.parse(data)
-
-                    this.update.display.updateGameDisplay()
-
-                })
+            changeScene: (manager_id, scene_id) => {
 
             }
-
         }
-
     }
 
-    stats = {
+    data = {
+        STORAGE: {
 
-        createStat: (stat) => {
-
-            this.data.STORAGE.data.stats = []
-                    
-            this.data.STORAGE.data.stats.push(stat)
-
-        },
-
-        checkStats: () => {
-
-            this.data.STORAGE.data.stats.forEach(stat => {
-
-                if (stat.limits != null) {
-
-                    if (stat.limits.max > stat.value) this.data.STORAGE.data.stats[stat] = stat.limits.max
-                    if (stat.limits.min < stat.value) this.data.STORAGE.data.stats[stat] = stat.limits.min
-
-                }
-            
-                if (stat.events != null) {
-
-                    stat.events.forEach(event => {
-
-                        switch (event.type) {
-
-                            case "test_value":
-
-                                event.conditions.forEach(condition => {
-
-                                    switch (condition.type) {
-
-                                        case "is_less_then_or_equal_to":
-                                            if (stat.value <= condition.value) {
-                                                this.gameClass[event.execute.function]()
-                                            }
-                                            break
-                                        default:
-                                            console.log("Error invalid condition type");
-                                    }
-
-                                })
-
-                                break
-                            default:
-                                console.log("Error cannot check Stat");
-
-                        }
-
-                    })
-
-                }
-
-            })
-
+            zip: null,
+            json: {},
+            data: {}
+    
         }
-
     }
-
 }
 
 export {TextAPI}
