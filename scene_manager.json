@@ -1,0 +1,12 @@
+{
+    "scene_managers": [
+        {
+            "id": 0,
+            "path": "/scenes/test_scenes/scene_manager.json"
+        },
+        {
+            "id": 1,
+            "path": "/scenes/test_scenes2/scene_manager.json"
+        }
+    ]
+}

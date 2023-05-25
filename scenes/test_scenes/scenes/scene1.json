@@ -1,0 +1,15 @@
+{
+    "scene_name": "Test scene 1",
+    "scene_description": "This is a test scene, please press next to go to the next scene",
+    "options": [
+        {
+            "id": 0,
+            "title": "Next",
+            "type": "None",
+            "next_scene": {
+                "manager_id": 1,
+                "scene_id": 0
+            }
+        }
+    ]
+}

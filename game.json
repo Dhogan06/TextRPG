@@ -1,3 +1,10 @@
 {
-  "url": "scenes/scene.json"
+  "game_name": "Test Game",
+  "game_description": "A test game",
+  "game_version": "0.0.1-Alpha",
+  "game_data": {
+    "root_scene_control": "/scene_manager.json",
+    "root_settings": "/settings.json",
+    "root_game_functions": "/game.js"
+  }
 }
