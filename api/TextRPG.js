@@ -111,13 +111,17 @@ class TextAPI {
                 this.buttonGroup = buttonGroup
 
                 // Initialize the game data and put it into variables
-                
-                this.data.STORAGE.zip.file(this.data.STORAGE.json.scenes[this.data.STORAGE.data.CURRENT_SCENE_ID].file).async("string").then(data => {
-
-                    this.data.STORAGE.data.CURRENT_SCENE = JSON.parse(data)
+                // Start scene
+                let root_settings = this.data.json.game_data.root_settings
+                var settings
+                this.data.STORAGE.zip.file(root_settings).async("string").then(data => {
+                    settings = JSON.parse(data)
                 })
+                let start_scene = settings.start_scene
+                this.update.scenes.setScene(start_scene.manager_id, start_scene.scene_id)
 
-                // setTimeout(this.update.display.updateGameDisplay.bind(this), 100)
+                // Init loop
+                setTimeout(this.update.display.updateGameDisplay.bind(this), 100)
             }
         }
     }
@@ -128,44 +132,44 @@ class TextAPI {
 
             if (option != null) {
 
-                option.conditions.forEach(condition => {
+                // option.conditions.forEach(condition => {
 
-                    if (condition != null) {
+                //     if (condition != null) {
 
-                        switch (condition.type) {
+                //         switch (condition.type) {
 
-                            default:
-                                console.log("Invalid Condition Type");
+                //             default:
+                //                 console.log("Invalid Condition Type");
 
-                        }
+                //         }
 
-                    }
+                //     }
 
-                })
+                // })
 
-                option.events.forEach(event => {
+                // option.events.forEach(event => {
 
-                    if (event != null) {
+                //     if (event != null) {
 
-                        switch (event.type) {
+                //         switch (event.type) {
 
-                            case "always_execute":
-                                this.gameClass[event.execute.function](...event.execute.args)
-                                break
-                            default:
-                                console.log("Invalid Event Type");
+                //             case "always_execute":
+                //                 this.gameClass[event.execute.function](...event.execute.args)
+                //                 break
+                //             default:
+                //                 console.log("Invalid Event Type");
 
-                        }
+                //         }
 
-                    }
+                //     }
 
-                })
+                // })
 
-                if (option.change_scene_to != null) {
+                // if (option.change_scene_to != null) {
 
-                    this.update.scenes.changeCurrentScene(option.change_scene_to)
+                //     this.update.scenes.changeCurrentScene(option.change_scene_to)
 
-                }
+                // }
 
             }
 
@@ -210,7 +214,7 @@ class TextAPI {
 
         scenes: {
 
-            changeScene: (manager_id, scene_id) => {
+            setScene: (manager_id, scene_id) => {
 
             }
         }
