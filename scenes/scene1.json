@@ -1,13 +1,15 @@
 {
     "scene_name": "Test scene 1",
-    "scene_description": "This is a test scene, please press next to go to the next scene",
+    "scene_description": "This is a test scene, please press ba<ck to go back a scene",
     "options": [
         {
             "id": 0,
-            "title": "Next",
+            "title": "Back",
             "type": "None",
+            "conditions": [
+            ],
             "next_scene": {
-                "manager_id": 1,
+                "manager_id": 0,
                 "scene_id": 0
             }
         }
